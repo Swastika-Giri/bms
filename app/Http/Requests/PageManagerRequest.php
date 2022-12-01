@@ -24,10 +24,10 @@ class PageManagerRequest extends FormRequest
     public function rules()
     {
         return [
-            'menu_name'=>'required',
-           'menu_slug'=>'required',
-            'position'=>'required',
-            'feature_image'=>'required',
+            'menu_name' =>'required',
+            'menu_slug' => 'nullable',
+            'position'  => 'required',
+            'feature_image'=>'required|mimes:jpeg,png,jpg,gif size:5000000',
             'page_content'=>'required',
             'redirect_url'=>'required |url',
             'status'=>'required',

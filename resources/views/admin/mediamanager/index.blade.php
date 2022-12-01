@@ -55,10 +55,10 @@
 
                                            <td>{{$item->file_path}}</td>
                                            <td>
-                                           <form action ="{{route('admin.mediamanager.destroy',$item->id)}}" method="post">
+                                           <form action ="{{route('admin.mediamanager.destroy',$item->id)}}" method="post"onSubmit="if(!confirm('Do you want to delete the media manager?')){return false;}">
                                                @csrf
                                                <input type="hidden" name="_method" value="delete">
-                                               <button class="bg-blue-500 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                               <button class="bg-red-500/30 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                                    Delete
                                                </button>
                                            </form>
@@ -69,4 +69,16 @@
                                 </div>
                         </div>
                                 </table>
+                        <script>
+                            function confirmAction() {
+                                let confirmAction = confirm("Are you sure  you want to delete the blog");
+                                if (confirmAction) {
+                                    alert("blog successfully deleted");
+                                } else {
+                                    return false;
+                                }
+                            }
+                        </script>
 @endsection
+
+

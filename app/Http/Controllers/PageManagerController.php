@@ -6,6 +6,7 @@ use App\Http\Requests\PageManagerRequest;
 use App\Models\MediaManager;
 use App\Models\PageManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PageManagerController extends Controller
 {
@@ -16,8 +17,9 @@ class PageManagerController extends Controller
 
     function index()
     {
-        $data= PageManager:: all();
+        $data= PageManager::orderBy('position','asc')->get();
         return view('admin.page_manager.index', compact('data'));
+
     }
     function store(PageManagerRequest $request)
     {
@@ -25,7 +27,12 @@ class PageManagerController extends Controller
         $fimg = $request->file('feature_image');
         $iname = $fimg->getClientOriginalName();
         $post['feature_image'] = $iname;
+        $post['menu_slug'] = Str::slug($post['menu_name']);
         $fimg->move('images/', $iname);
+       // $status = actions.PageManagerRequest(id, $request);
+       // $post->status= $request->status;
+        //$post->save();
+        //return  response()->json('success');
         if (PageManager::create($post)) {
             $request->session()->flash('success', 'Data Saved  successfully');
             return redirect()->route('admin.page_manager.index');
@@ -46,14 +53,12 @@ class PageManagerController extends Controller
     {
 
         $post = $request->validated();
-       // dd($post);
-        //dd($post);
         $data = PageManager:: find($id);
         if (!$data) {
             request()->session()->flash('error', ' pagemanager not found');
             return redirect()->route('admin.page_manager.index');
         }
-        if ($data->update($request->all())) {
+        if ($data->update($post)) {
             $request->session()->flash('success', 'Pagemanager updated successfully');
             return redirect()->route('admin.page_manager.index');
 
@@ -61,7 +66,7 @@ class PageManagerController extends Controller
             $request->session()->flash('error', 'Pagemanager update failed failed');
             return redirect()->back();
         }
-        $data->update($request->all());
+        //$data->update($post);
     }
     function destroy($id)
     {
@@ -83,6 +88,22 @@ class PageManagerController extends Controller
 
 
     }
+    function updateStatus(Request $request) {
+        if($request->ajax()){
+            $post = [
+                'status' => $request->status
+            ];
+            $update = PageManager::where('id', $request->page_id)->update($post);
+            if ($update == true) {
+                return response()->json(['success' => true, 'message' => 'page status has been changed successfully']);
+            } else {
+                return response()->json()(['error' => true, 'message' => 'status update fail. something goes wrong']);
+            }
+        } else {
+            return response()->json(['status'=>'Http request']);
+        }
+    }
+
 }
 
 

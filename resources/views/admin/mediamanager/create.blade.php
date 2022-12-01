@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 @section('main-content')
-
-    <div class="card-body">
+    <div class="w-full p-6">
+        <div class="w-full max-w-full">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                <div class="card-body">
         <form action ="{{route('admin.mediamanager.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="flex-auto p-6">
@@ -14,7 +16,7 @@
                         <span class="block sm:inline flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3" role="alert">{{$message}}</span>
 @enderror
             <div class="text-center">
-                <button type="submit" class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 size:"20%">Upload</button>
+                <button type="submit" class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-blue-500 align-middle transition-all bg-orange-500/30 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 size:"20%">Upload</button>
             </div>
                     </div>
                 </div>

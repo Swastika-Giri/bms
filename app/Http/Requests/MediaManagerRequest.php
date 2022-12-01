@@ -24,7 +24,7 @@ class MediaManagerRequest extends FormRequest
     public function rules()
     {
         return [
-            'file_name'=>'required',
+            'file_name'=>'required||mimes:jpeg,png,jpg,gif,pdf,docs size:5000000',
 //            'file_type'=>'required',
 //            'file_path'=>'required',
         ];
